@@ -65,7 +65,7 @@ export default class App {
         // Adding html to flickity $('.product-list').flickity
         
         let productCells = this.catalog.showCatalogProducts(products);
-        document.getElementById('caitlin').innerHTML = productCells; 
+        document.getElementById('productList').innerHTML = productCells; 
         
         // ADDING EVENT LISTENERS TO THE BUTTONS
         for (let btnCount=0; btnCount<products.length; btnCount++){
@@ -106,7 +106,7 @@ export default class App {
         let sku = $(evt.target).data('sku');
         let productAdded = this.getProductBySku(sku);
         $('#shoppingCartContent').html("");
-        $('#content').last().html('<img src="'+productAdded.image+'" alt="'+productAdded.name+'" title="'+productAdded.name+'"><b>'+ productAdded.name +'</b><br><b>$'+productAdded.salePrice+'</b><p>'+productAdded.shortDescription+'<p><br>');
+        $('#content').last().html('<img src="'+productAdded.thumbnailImage+'" alt="'+productAdded.name+'" title="'+productAdded.name+'"><b>'+ productAdded.name +'</b><br><b>$'+productAdded.salePrice+'</b><p>'+productAdded.shortDescription+'<p><br>');
     }
     
     getProductBySku(sku=0){
