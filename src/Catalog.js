@@ -12,7 +12,7 @@ export default class Catalog {
             // produce a "table" of items
             let currentItem = products[itemCount];
             productCell += '<div class="product-wrapper" style="position: absolute; left:'+itemCount*530+'" >';
-            productCell += '<img style="border:2px solid black;" src="'+currentItem["image"]+'" alt="'+currentItem["name"]+'" title="'+currentItem["name"]+'" height="250" width="250">';
+            productCell += '<img src="'+currentItem["image"]+'" alt="'+currentItem["name"]+'" title="'+currentItem["name"]+'" height="250" width="250">';
             productCell += '<p>'+currentItem["name"]+'<br>'+currentItem["salePrice"]+'</p>';
             productCell += `<button type='button' id='quickView-` +currentItem['sku'] + `' data-sku='` + currentItem['sku'] + `'>Quick View</button>`;
             productCell += `<button type='button' id='` +currentItem['sku'] + `' data-sku='` + currentItem['sku'] + `'>Add To Cart</button>`;
