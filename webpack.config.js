@@ -28,7 +28,7 @@ const webpack = require('webpack');
 const PATHS = {
     src: join(__dirname, 'src'),
     fonts: join(__dirname, 'fonts'),
-    build: join(__dirname, 'build')
+    build: 'build'
 };
 
 // Thus the PATHS constant above can help refer to your folders.
@@ -51,15 +51,15 @@ from outside of /path/to/nodejs-module so it can't be daemonized */
 
 module.exports = {
     entry: {
-        src: join(PATHS.src, 'index.js')
+        src: join(PATHS.src, 'index.js') // first look for this file, and convert it to ES5 ...
     },
     resolve: {
         extensions: ['', '.js']
     },
     output: {
         path: process.cwd(),
-        publicPath: '/yourProjectName/',
-        filename: join(PATHS.build,'bundle.js')
+        publicPath: '/ra-project03/', // YourProjectName
+        filename: join(PATHS.build,'bundle.js') // ... and put it in the project folder in the build file
     },
     module: {
         loaders: [{
