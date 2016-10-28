@@ -83,8 +83,10 @@ export default class ShoppingCart {
         console.log('you are in the update cart button function');
         for (var i=0; i<localCart.length; i++){
             let currentProduct = new Object( localCart[i] );
+            console.log('currentProduct: '+currentProduct);
             //let currentProduct = localCart[i];
             let itemSku = currentProduct['sku'];
+            console.log('itemSku: '+itemSku);
             //let itemSku = currentProduct.sku; *
             let newQty = currentProduct['qty'];
             console.log('quantity: '+newQty);
@@ -96,8 +98,7 @@ export default class ShoppingCart {
                 } 
             }
         }   
-    }
-    
+    }  
 
     showCart(evt, context){
         //console.log('you made it to the shopping cart!');
@@ -146,10 +147,10 @@ export default class ShoppingCart {
                 })
                 // TEXT FIELDS
                 $('#input-'+currentItem['sku']).on('change',function(evt){
-                    console.log("you changed something");
+                    //console.log("you changed something");
                     let targetSku = $(evt.target).data('sku');
                     let grabbedValue = $(this).val();
-                    console.log(grabbedValue);
+                    //console.log(grabbedValue);
                    
                     for(let iCount=0; iCount<localCart.length; iCount++){
                         let localCartItem = localCart[iCount];
