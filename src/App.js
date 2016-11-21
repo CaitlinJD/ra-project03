@@ -51,7 +51,8 @@ export default class App {
         };
        this.failCallback = function(error) {
            console.error('Failed! \n', error);
-       }; this.bbAPIService.loadDataUsingJS().then(this.successCallback, this.failCallback);
+       };
+       this.bbAPIService.loadDataUsingJS().then(this.successCallback, this.failCallback);
     }
     
     processResultsIntoUsableData(result){
@@ -62,11 +63,11 @@ export default class App {
     }
     
     createTableOfItems(products){
-        // Adding html to flickity $('.product-list').flickity
+        // Adding html to flickity $('.productList').flickity
         
         let productCells = this.catalog.showCatalogProducts(products);
         document.getElementById('productList').innerHTML = productCells; 
-        
+
         // ADDING EVENT LISTENERS TO THE BUTTONS
         for (let btnCount=0; btnCount<products.length; btnCount++){
             let currentItem = products[btnCount];

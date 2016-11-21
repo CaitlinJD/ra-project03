@@ -151,7 +151,7 @@ export default class ShoppingCart {
                     let targetSku = $(evt.target).data('sku');
                     let grabbedValue = $(this).val();
                     //console.log(grabbedValue);
-                   
+                   // TODO: need to change the input value='' to the .val
                     for(let iCount=0; iCount<localCart.length; iCount++){
                         let localCartItem = localCart[iCount];
                         if (localCartItem.sku == targetSku){

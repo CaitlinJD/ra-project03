@@ -9,7 +9,7 @@
 		 var $cartTotal = 0,
 		     $totalItems = $('.total-items');
 
-		 $('.product-list').on('click', 'button', function(event) {
+		 $('.productList').on('click', 'button', function(event) {
 			 event.preventDefault();
 			 $cartTotal++;
 			 $totalItems.text($cartTotal).show();
@@ -42,7 +42,7 @@
 	 */
 
 	$(function() {
-		$('.product-list').flickity({
+		$('.productList').flickity({
 			cellAlign: 'left',
 			contain: true,
 			percentPosition: false,

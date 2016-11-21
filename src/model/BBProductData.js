@@ -10,5 +10,7 @@ export default class BBProductData {
         this.partial = data['partial'];
         this.canonicalUrl = data['canonicalUrl'];
         this.products = data['products'];
+
+        // create a product object
     }
 }

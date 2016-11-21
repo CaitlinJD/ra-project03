@@ -2,8 +2,8 @@
 /*-----------------------------------------*/
 
 * {
-   box-sizing: border-box;
-   outline: none;
+    box-sizing: border-box;
+    outline: none;
 }
 
 *:focus {
@@ -546,7 +546,7 @@ section h2 {
    padding: 0;
 }
 
-.product-list:focus {
+.productList:focus {
    outline: thin dotted; /* improve accessibility */
 }
 

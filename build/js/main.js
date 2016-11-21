@@ -27,7 +27,7 @@
 	 */
 
 	$(function() {
-		$('.product-list').flickity({
+		$('.productList').flickity({
 			cellAlign: 'left',
 			contain: true,
 			percentPosition: false,
