@@ -15,7 +15,7 @@ export default class App {
     }
     
     displayShoppingCart(){
-        console.log('you are in the app displayShoppingCart function');
+        //console.log('you are in the app displayShoppingCart function');
         let context = this;
         $('#cart').on('click',null,{context:context},function(evt){
             context.modal.style.display = "block";
@@ -93,9 +93,9 @@ export default class App {
             return;
         }
         let sku = $(evt.target).data('sku');      
-        console.log(sku);
+        //console.log(sku);
         let productAdded = this.getProductBySku(sku);
-        $('#shoppingCartContent').html("");
+        $('#shoppingCartContent').html(""); // Clearing cart content here
         $('#content').last().html('<img src="'+productAdded.thumbnailImage+'" alt="'+productAdded.name+'" title="'+productAdded.name+'"><b>'+ productAdded.name +'</b><br>has been added to the cart.<br>');
         context.shoppingCart.addItemToCart(1, sku);
     }

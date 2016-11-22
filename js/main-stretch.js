@@ -6,13 +6,11 @@
 	 */
 
 	 $(function() {
-		 var $cartTotal = 0,
-		     $totalItems = $('.total-items');
+		 var $totalItems = $('.total-items');
 
 		 $('.productList').on('click', 'button', function(event) {
 			 event.preventDefault();
-			 $cartTotal++;
-			 $totalItems.text($cartTotal).show();
+			 $totalItems.show();
 		 });
 	 });
 

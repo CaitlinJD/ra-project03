@@ -25,9 +25,11 @@ export default class ShoppingCart {
         // case: we're the 1st product
         if (numberOfItemsInCart == 0){
             this.ss.setItem(item.toString(), qty.toString());
+            this.totalCartItems();
             return;
         } else {
             let numMatches = 0;
+            //check to see if the item is already in ss
             for (let theKey in this.ss) {
                 console.log('the Key =' + theKey);
                 if (theKey == item.toString()) {
@@ -35,12 +37,15 @@ export default class ShoppingCart {
                     let newValue = (parseInt(this.ss.getItem(theKey)) + parseInt(qty)).toString();
                     this.ss.setItem(theKey, newValue);
                     numMatches = 1;
+                    this.totalCartItems();
                 } else {
                     console.log('no match');
                 }
             }
+            // add the item if not already in ss
             if (numMatches == 0) {
                 this.ss.setItem(item.toString(), qty.toString());
+                this.totalCartItems();
             }
         }
     }
@@ -77,39 +82,64 @@ export default class ShoppingCart {
             }
         }
         if (numMatches == 0) {return;}
+        this.totalCartItems();
     }
     
-    updateCart(localCart, context) {
+    updateCart() {
         console.log('you are in the update cart button function');
-        for (var i=0; i<localCart.length; i++){
-            let currentProduct = new Object( localCart[i] );
-            console.log('currentProduct: '+currentProduct);
-            //let currentProduct = localCart[i];
-            let itemSku = currentProduct['sku'];
-            console.log('itemSku: '+itemSku);
-            //let itemSku = currentProduct.sku; *
-            let newQty = currentProduct['qty'];
-            console.log('quantity: '+newQty);
-            for (let theKey in context.shoppingCart.ss){
-                if (theKey == itemSku){
-                    context.shoppingCart.ss.setItem(itemSku, newQty);
-                } else {
-                    console.log('not a match');
-                } 
+        let currentItems = $('#shoppingCartContent').children('li');
+        console.log(currentItems);
+
+        for (var i = 0; i < currentItems.length; i++) {
+            let itemSku = $(currentItems[i]).children('input').data('sku');
+            let itemQty = $(currentItems[i]).children('input').val();
+            console.log(itemSku);
+            console.log(itemQty);
+            // check item sku to make sure it's not undefined
+            if (itemSku == undefined) {
+                console.log('no match');
+            } else {
+                // loop through session storage
+                for (let theKey in this.ss) {
+                    //look for a match in sku
+                    if (theKey == itemSku) {
+                        this.ss.setItem(theKey, itemQty);
+                        // remove item from cart if qty is 0
+                        if (itemQty == 0) {
+                            this.ss.removeItem(theKey);
+                            $('#input-' + theKey).parent().remove();
+                            break;
+                        }
+                    }
+                }
             }
-        }   
-    }  
+        }
+        this.totalCartItems();
+    }
+
+    //update the total number of items in cart shown in header
+    totalCartItems() {
+        //loop through ss and add all the qty's
+        let total = 0;
+        for (let theKey in this.ss) {
+            let qty = (parseInt(this.ss.getItem(theKey)));
+            total += qty;
+            console.log("The total number of items is: " + total);
+        }
+        $('.total-items').html(total);
+    }
 
     showCart(evt, context){
         //console.log('you made it to the shopping cart!');
         $('#content').html("");
+        $('#content').html("<h1>Shopping Cart</h1>");
+        $('#shoppingCartContent').html("");
         let cartContent = "";
         let cartQty = this.ss.length;
         //console.log('cart-Qty: '+cartQty);
         if (this.ss == null || cartQty<=0) {
             cartContent = "<li><b>You have no items in the shopping cart.</b></li>";
         }else {
-            cartContent = "<h1>Shopping Cart</h1>";
             for(let theKey in this.ss){
                 let criteriaFn = function(product){
                     return product['sku'] == theKey;
@@ -122,21 +152,7 @@ export default class ShoppingCart {
             }
             $('#shoppingCartContent').append(cartContent);
             
-            // SET UP LOCAL CART
-            let localCart = [];
-            localCart = setUpLocalCart();
-            function setUpLocalCart(){
-                let counter = 0;
-                console.log(context.shoppingCart.ss);
-                for (let theKey in context.shoppingCart.ss){
-                    let qty = context.shoppingCart.ss.getItem(theKey);
-                    localCart[counter] = {'sku': theKey, 'qty': qty};
-                    counter++;
-                }  
-                return localCart;
-            }
-            //console.log(localCart);
-            
+
             // ADDING EVENT HANDLERS
             for(let btnCount=0; btnCount<context.products.length; btnCount++){
                 let currentItem = context.products[btnCount];
@@ -145,26 +161,12 @@ export default class ShoppingCart {
                     let item = $("#delete-"+currentItem['sku']).data('sku');
                     context.shoppingCart.deleteItemFromCart(1, item);
                 })
-                // TEXT FIELDS
-                $('#input-'+currentItem['sku']).on('change',function(evt){
-                    //console.log("you changed something");
-                    let targetSku = $(evt.target).data('sku');
-                    let grabbedValue = $(this).val();
-                    //console.log(grabbedValue);
-                   // TODO: need to change the input value='' to the .val
-                    for(let iCount=0; iCount<localCart.length; iCount++){
-                        let localCartItem = localCart[iCount];
-                        if (localCartItem.sku == targetSku){
-                            localCartItem.qty = grabbedValue;
-                        }
-                    } 
-                    console.log(localCart);
-                })
             }
+
             let updateBtn = "<button id='updateBtn'>Update Cart</button><button>Checkout</button>";
             $('#shoppingCartContent').append(updateBtn);
-            $('#updateBtn').on('click',null,{localCart:localCart} ,function(event){
-                context.shoppingCart.updateCart(event.data.localCart, context);
+            $('#updateBtn').on('click',null,{} ,function(event){
+                context.shoppingCart.updateCart();
             })
         }
     }
