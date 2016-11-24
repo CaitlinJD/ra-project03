@@ -1,9 +1,13 @@
 export default class Catalog {
+
+
     constructor(){
-        //
+        this.carousel = {};
     }
     
     showCatalogProducts(products){
+
+
         console.log('createTableOfItems();');
         let productCell ="";
         // count the number of products (should be 10)
@@ -18,7 +22,12 @@ export default class Catalog {
             productCell += `<button type='button' id='` +currentItem['sku'] + `' data-sku='` + currentItem['sku'] + `'>Add To Cart</button>`;
             productCell += '</div>';
             productCell += '\n';
+
+
+
         }
         return productCell;
+        //$carousel.flickity( 'prepend', productCell );
     }
+
 }

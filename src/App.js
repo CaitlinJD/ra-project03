@@ -12,13 +12,28 @@ export default class App {
         this.initModal();
         this.shoppingCart = new ShoppingCart();
         this.displayShoppingCart();
+        this.initFlickity();
     }
-    
+
+    initFlickity() {
+        this.carousel = $('.productList').flickity({
+            initialIndex: 1,
+            cellAlign: "left",
+            contain: true,
+            percentPosition: false,
+            imagesLoaded: true,
+            autoPlay: true,
+            prevNextButtons: false,
+            setGallerySize: false,
+        });
+        this.catalog.carousel = this.carousel;
+    }
+
     displayShoppingCart(){
         //console.log('you are in the app displayShoppingCart function');
         let context = this;
-        $('#cart').on('click',null,{context:context},function(evt){
-            context.modal.style.display = "block";
+        $('#cart').on('click',function(evt){
+            $("#myModal").fadeIn(300);
             context.shoppingCart.showCart(evt, context);
         })
     }
@@ -31,7 +46,7 @@ export default class App {
         this.closeSpan = document.getElementsByClassName("close")[0];
         // When the user clicks on <span> (x), close the modal
         this.closeSpan.onclick = function() {
-            $("#myModal").css('display', 'none');
+            $("#myModal").fadeOut(200);
         }
 
         // When the user clicks anywhere outside of the modal, close it
@@ -66,7 +81,10 @@ export default class App {
         // Adding html to flickity $('.productList').flickity
         
         let productCells = this.catalog.showCatalogProducts(products);
-        document.getElementById('productList').innerHTML = productCells; 
+        this.carousel.flickity('prepend', $.parseHTML (productCells));
+        console.log(productCells);
+        //$carousel.flickity( 'prepend', productCells );
+        //document.getElementById('productList').innerHTML = productCells;
 
         // ADDING EVENT LISTENERS TO THE BUTTONS
         for (let btnCount=0; btnCount<products.length; btnCount++){
@@ -76,13 +94,13 @@ export default class App {
             
             // add to cart
             $('#'+currentItem['sku']).on('click', null, {context:context}, function(event){
-                context.modal.style.display = "block";
+                $("#myModal").fadeIn(300);
                 context.prepareItemToAddToCart(event, context);
             });
             
             // quick view
             $('#quickView-'+currentItem['sku']).on('click', null, {context:context}, function(event){
-                context.modal.style.display = "block";
+                $("#myModal").fadeIn(300);
                 context.showQuickView(event, context);
             });
         }

@@ -67,10 +67,9 @@ export default class ShoppingCart {
                 this.ss.setItem(theKey, newValue.toString());
                 numMatches = 1; 
                 // update the input value
-                let currentInputValue = $('#input-'+theKey).attr('value');
-                currentInputValue = currentInputValue - 1;
-                $('#input-'+theKey).attr('value',currentInputValue);
-                $('#input-'+theKey).val(currentInputValue);
+                $('#input-'+theKey).attr('value',newValue);
+                $('#input-'+theKey).val(newValue);
+
                 if (newValue == 0){
                     this.ss.removeItem(theKey);
                     $('#input-'+theKey).parent().remove();
@@ -86,15 +85,15 @@ export default class ShoppingCart {
     }
     
     updateCart() {
-        console.log('you are in the update cart button function');
+        //console.log('you are in the update cart button function');
         let currentItems = $('#shoppingCartContent').children('li');
         console.log(currentItems);
 
         for (var i = 0; i < currentItems.length; i++) {
             let itemSku = $(currentItems[i]).children('input').data('sku');
             let itemQty = $(currentItems[i]).children('input').val();
-            console.log(itemSku);
-            console.log(itemQty);
+            //console.log(itemSku);
+            //console.log(itemQty);
             // check item sku to make sure it's not undefined
             if (itemSku == undefined) {
                 console.log('no match');
